@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 public class ScraperService {
 
   String VNEXPRESS_HOME_URL = "https://vnexpress.net/suc-khoe";
+  int NUMBER_OF_ARTICLES = 10;
+
   FileService fileService;
   AIService AIService;
   EmailService emailService;
@@ -53,7 +55,7 @@ public class ScraperService {
       log.info("Total {} articles found on homepage.", hrefs.size());
 
       Collections.shuffle(hrefs, random);
-      while (urls.size() < 4 && !hrefs.isEmpty()) {
+      while (urls.size() < NUMBER_OF_ARTICLES && !hrefs.isEmpty()) {
         urls.add(hrefs.remove(0));
       }
       log.info("Selected {} unique article URLs.", urls.size());
