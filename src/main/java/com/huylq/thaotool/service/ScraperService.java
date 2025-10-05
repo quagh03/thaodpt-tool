@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -34,7 +36,7 @@ public class ScraperService {
   AIService AIService;
   EmailService emailService;
 
-  private final ExecutorService executorService = Executors.newFixedThreadPool(4);
+  private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
   public List<Article> scrapeArticle() {
     Set<String> urls = new HashSet<>();
@@ -89,7 +91,15 @@ public class ScraperService {
       log.error("Error saving articles to HTML file: ", e);
     }
 
-    emailService.sendEmail(htmlFilePath);
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("name", "Thao");
+
+    try {
+      emailService.sendEmail("dothao120104@gmail.com","Result VNExpress: " + System.currentTimeMillis(), "emailTemplate", htmlFilePath, variables);
+      log.info("Sent email successfully");
+    } catch (Exception e) {
+      log.error("Error sending email to dothao120104: ", e);
+    }
 
     return articles;
   }

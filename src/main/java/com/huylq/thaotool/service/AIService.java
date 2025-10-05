@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
-import java.util.concurrent.*;
 
 @Slf4j
 @Service
@@ -18,12 +17,14 @@ public class AIService {
 
   private static final String URL = "http://localhost:1234/v1/chat/completions";
   private final RestTemplate restTemplate = new RestTemplate();
-  private final String FIXED_CONTENT = "Viết lại đoạn văn này hay và dài hơn phài đảm bảo nội dung tốt như đoạn văn gốc, vẫn giữ tag </br> cho tôi. Chỉ trả kết quả dạng text và không giải thích gì thêm.";
+  private final String FIXED_PROMPT = "Viết lại đoạn văn này hay và dài hơn phài đảm bảo nội dung tốt như đoạn văn gốc, " +
+      "lưu ý không chia các đoạn quá nhỏ mỗi đoạn tầm 5 đến 6 dòng, phân cách mỗi đoạn bạn thêm tag </br> cho tôi. " +
+      "Chỉ trả kết quả dạng text và không giải thích gì thêm.";
 
   public String rewriteText(String userContent) {
     Map<String, Object> systemMsg = Map.of(
         "role", "system",
-        "content", FIXED_CONTENT
+        "content", FIXED_PROMPT
     );
 
     Map<String, Object> userMsg = Map.of(
