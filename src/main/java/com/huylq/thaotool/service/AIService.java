@@ -18,11 +18,12 @@ public class AIService {
 
   private static final String URL = "http://localhost:1234/v1/chat/completions";
   private final RestTemplate restTemplate = new RestTemplate();
+  private final String FIXED_CONTENT = "Viết lại đoạn văn này hay và dài hơn phài đảm bảo nội dung tốt như đoạn văn gốc, vẫn giữ tag </br> cho tôi. Chỉ trả kết quả dạng text và không giải thích gì thêm.";
 
   public String rewriteText(String userContent) {
     Map<String, Object> systemMsg = Map.of(
         "role", "system",
-        "content", "Viết lại đoạn văn này hay và dài hơn phài đảm bảo nội dung tốt như đoạn văn gốc, vẫn giữ tag </br> cho tôi. Chỉ trả kết quả dạng text và không giải thích gì thêm."
+        "content", FIXED_CONTENT
     );
 
     Map<String, Object> userMsg = Map.of(
